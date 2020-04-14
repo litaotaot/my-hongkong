@@ -1,0 +1,3 @@
+.el-table tbody tr:hover>td { 
+    background-color:red !important
+}
