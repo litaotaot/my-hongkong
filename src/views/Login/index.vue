@@ -2,7 +2,7 @@
   <div id="login">
       <div class="header"></div>
       <div class="img"></div>
-      <div class="hint">MMIS  &nbsp;&nbsp;****国际机场维护与管理系统</div>
+      <div class="hint">开飞机的舒克  &nbsp;&nbsp;****舒克机场维护与管理系统</div>
       <div class="inputs">
           <h2>管理后台</h2>
           <div class="zhanghao">
@@ -25,7 +25,7 @@
           <div class="register" @click="ToLogin">立即注册</div>
       </div>
       <div class="footer">
-          <div>Cppy Right 民航物流技术</div>
+          <div>惊雷 紫金塌陷地火吹</div>
       </div>
   </div>
 </template>
