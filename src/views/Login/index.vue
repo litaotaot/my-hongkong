@@ -105,7 +105,7 @@ export default {
 }
 .img{
     width: 100vw;
-    background-image: url('../../assets/airport.png');
+    /* background-image: url('../../assets/airport.png'); */
     flex: 1;
 }
 .hint{

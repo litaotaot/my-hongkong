@@ -1,32 +1,47 @@
 <template>
-  <div>
-    <el-table :data="tableData" stripe style="width: 100%" @cell-mouse-enter='aa'>
-      <el-table-column prop="date" label="日期" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column prop="b" label="地址"></el-table-column>
-      <el-table-column prop="c" label="地址"></el-table-column>
-      <el-table-column prop="operating" label="操作" align="center">
-        <template slot-scope="scope">
-          <el-button
-            @click="handleClickOne(scope.row.date,scope.$index)"
-            type="text"
-            size="small"
-          >{{scope.row.date === '在线' ? '查看' : scope.row.date === '离线' ? '编辑' : scope.row.date === '待审核' ? '审核' : ''}}</el-button>
-          <el-button
-            @click="handleClickTwo(scope.row.date,scope.$index)"
-            type="text"
-            size="small"
-          >{{scope.row.date === '在线' ? '强制下线' : scope.row.date === '离线' ? '删除' : ''}}</el-button>
-          <el-button
-            @click="handleClickThree(scope.row.date,scope.$index)"
-            type="text"
-            size="small"
-          >{{scope.row.date === '离线' ? '授权' : ''}}</el-button>
-        </template>
-      </el-table-column>
+  <div class="table">
+    <el-table :data="getSelectData" stripe style="width: 100%" height="484" size="small">
+      <template v-for="item in HeaderData">
+        <el-table-column
+          :key="item.prop"
+          :prop="item.prop"
+          :label="item.label"
+          :align="item.align"
+          v-if="item.prop !== 'g'"
+        ></el-table-column>
+        <el-table-column
+          :key="item.prop"
+          :prop="item.prop"
+          :label="item.label"
+          :align="item.align"
+          v-else
+        >
+          <template slot-scope="scope">
+            <el-button
+              @click="handleClick"
+              type="text"
+              size="small"
+              v-for="(node,index) in scope.row.z"
+              :key="index"
+            >{{node}}</el-button>
+          </template>
+        </el-table-column>
+      </template>
     </el-table>
-    <EditRole :dialogTableVisible="dialogTableVisible" @closeDialog='isCloseDialog'></EditRole>
+    <div class="pagination">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :hide-on-single-page="false"
+        :background="true"
+        :current-page="currentPage"
+        :page-sizes="pageSizes"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
+    </div>
+    <EditRole :dialogTableVisible="dialogTableVisible" @closeDialog="isCloseDialog"></EditRole>
   </div>
 </template>
 
@@ -34,92 +49,59 @@
 import EditRole from "./EditRole";
 // import getSyncData from '../api'
 
-
 export default {
+  props: {
+    tableData: Array,
+    HeaderData: Array,
+    pageSizes4: Array,
+    pageSize4: Number,
+    currentPage4: {
+      type: Number,
+      default: 1
+    }
+  },
   data() {
     return {
       dialogTableVisible: false,
-      tableData: [],
-      filters: []
+      // tableData: [],
+      // filters: [],
+      pageSizes: this.pageSizes4 || [10, 20, 30, 40], //选择页数范围
+      pageSize: this.pageSize4 || 10, //数据个数
+      currentPage: this.currentPage4, //目标页
+      pageNum: 1 //起始数据页
     };
   },
   mounted() {
-    this.getInitState()
+    // console.log(this.getSelectData())
   },
-  methods: {
-    handleClickOne(r, i) {
-      if (r === "在线") {
-        console.log("查看");
-      } else if (r === "离线") {
-        console.log("编辑");
-        console.log(this.dialogTableVisible);
-        this.dialogTableVisible = true;
-      } else if (r === "待审核") {
-        console.log("审核");
-      }
+  computed: {
+    total() {
+      return this.tableData.length;
     },
-    handleClickTwo(r, i) {
-      if (r === "在线") {
-        console.log("强制下线");
-      } else if (r === "离线") {
-        console.log("删除");
-      }
-    },
-    handleClickThree(r, i) {
-      console.log("授权");
-    },
-    isCloseDialog(e){
-      console.log(e)
-      this.dialogTableVisible = e
-    },
-    aa(row, column, cell, event){
-      console.log(row, column, cell, event)
-    },
-    getInitState(){
-      this.$store.dispatch('filters/GET_ALL_SYNC_STATE')
-      let tableData
-      let _this = this
-      setTimeout(function() {
-        tableData = [
-          {
-            date: "在线",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1518 弄",
-            b: "11111",
-            c: "22222"
-          },
-          {
-            date: "在线",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1517 弄",
-            b: "11111",
-            c: "22222"
-          },
-          {
-            date: "离线",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1519 弄",
-            b: "11111",
-            c: "22222"
-          },
-          {
-            date: "待审核",
-            name: "王小虎",
-            address: "上海市普陀区金沙江路 1516 弄",
-            b: "11111",
-            c: "22222"
-          }
-        ]
-        _this.tableData = tableData
-      }, 2000);
-      
-    },
-    watch(){
-
+    getSelectData() {
+      return this.tableData.slice(
+        this.pageSize * (this.pageNum - 1),
+        this.pageSize * this.pageNum
+      );
     }
   },
-  created () {
+  methods: {
+    handleSizeChange(val) {
+      this.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      this.pageNum = val;
+    },
+    handleClick(r) {
+      console.log(r);
+    },
+    isCloseDialog(e) {
+      console.log(e);
+      this.dialogTableVisible = e;
+    },
+    watch() {}
   },
+  created() {},
   components: {
     EditRole
   }
@@ -127,6 +109,17 @@ export default {
 </script>
 
 <style scoped>
-
-
+.table {
+  position: relative;
+}
+.pagination {
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  bottom: -50px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>>

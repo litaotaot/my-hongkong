@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div class="left">
+    <!-- <div class="left">
       <el-menu
         default-active="1"
         text-color="#ffffff"
@@ -28,14 +28,16 @@
       <div class="head">
           <i class="iconfont icon-hezi" style="color:white;font-size:34px;"></i>
       </div>
-    </div>
+    </div> -->
     <div class="right">
         <router-view></router-view>
     </div>
+    <Layout></Layout>
   </div>
 </template>
 
 <script>
+import Layout from '../Layout/Layout'
 export default {
   name: "home",
   data() {
@@ -46,29 +48,32 @@ export default {
   mounted(){
         
   },
-  methods: {
-      OpenNavi(){
-          if(!this.isCollapse){
-              this.isCollapse = true;
-          }else{
-              this.isCollapse =false;
-          }
-      },
-      Openuser(){
-          this.$router.push({name:'user'})
-      },
-      Openrole(){
-          this.$router.push({path:'/home/role'})
-      },
-      Openpermission(){
-          this.$router.push({name:'permission'})
-      }
+  components: {
+    Layout
   }
+  // methods: {
+  //     OpenNavi(){
+  //         if(!this.isCollapse){
+  //             this.isCollapse = true;
+  //         }else{
+  //             this.isCollapse =false;
+  //         }
+  //     },
+  //     Openuser(){
+  //         this.$router.push({name:'user'})
+  //     },
+  //     Openrole(){
+  //         this.$router.push({path:'/home/role'})
+  //     },
+  //     Openpermission(){
+  //         this.$router.push({name:'permission'})
+  //     }
+  // }
 };
 </script>
 
 <style scoped>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+/* .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
 }
@@ -95,5 +100,6 @@ export default {
 .right{
     flex: 1;
     min-width: 1200px;
-}
+    min-width: 1100px;
+} */
 </style>
