@@ -166,7 +166,7 @@ const filters = {
       let filterState=[]
       data.map(item => {
         state.tableData.map(node => {
-          if (node.date === item) {
+          if (node.a === item) {
             filterState.push(node)
           }
         })

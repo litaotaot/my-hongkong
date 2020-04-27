@@ -7,12 +7,12 @@ import './assets/css/iconfont.css'
 import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './css/tableHight.css'
-import mixin from './mixin/mixin'
+// import mixin from './mixin/mixin'
 import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(ElementUi)
-Vue.mixin(mixin)
+// Vue.mixin(mixin)
 
 /* eslint-disable no-new */
 new Vue({

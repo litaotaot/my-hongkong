@@ -38,7 +38,7 @@ export default new Router({
           {
             path:'permission',
             name:'permission',
-            component:() => import( /* webpackChunkName: "about" */ "../views/Permission/index.vue")
+            component:() => import( /* webpackChunkName: "about" */ "../views/Authority/index.vue")
           }
         ]
       }

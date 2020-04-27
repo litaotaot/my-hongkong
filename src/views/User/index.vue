@@ -7,6 +7,9 @@
         :pageSizes4="pageSizes"
         :pageSize4="pageSize"
         :currentPage4="currentPage"
+        :buttonsArr4="buttonsArr"
+        :checksArr4="checksArr"
+        :placeholder4="placeholder"
       ></CommonTable>
     </div>
   </div>
@@ -26,6 +29,17 @@ export default {
       pageSize: 10,
       currentPage: 1, //目标页
       // pageNum: 1
+      buttonsArr:[
+        { type: 'primary', text: '新增' },
+        { type: 'primary', text: '导入' },
+        { type: 'primary', text: '配置' }
+      ],    //按钮配置
+      checksArr: [
+        { label: '在线' },
+        { label: '离线' },
+        { label: '待审核' },
+      ],    //多选框配置
+      placeholder: '请输入内容'    //搜索框提示文字
     };
   },
   computed: {
@@ -33,9 +47,6 @@ export default {
       tableData: state => state.filters.tableData, //可以用过滤的方法试下
       filterState: state => state.filters.filterState //可以用过滤的方法试下
     })
-    // tableData() {
-    //   return this.$store.state.filters.tableData
-    // }
   },
   methods: {},
   mounted() {},

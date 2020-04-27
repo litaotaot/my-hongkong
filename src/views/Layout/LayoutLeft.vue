@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import LayoutConfig from "./LayoutConfig";
 import LayoutTop from "./LayoutTop";
 export default {
   name: "layout",
@@ -59,7 +58,6 @@ export default {
     }
   },
   components: {
-    LayoutConfig,
     LayoutTop
   }
 };

@@ -77,20 +77,20 @@ export default {
 
 <style scoped>
 .Timer {
-  height: 51px;
-  background: #f5f5f5;
+  height: 60px;
+  background: #ffffff;
   display: flex;
   justify-content: space-between;
 }
 .hint_one {
-  line-height: 51px;
+  line-height: 60px;
   font-weight: bold;
 }
 .hint_two {
-  line-height: 51px;
+  line-height: 60px;
 }
 .hint_three {
-  line-height: 51px;
+  line-height: 60px;
   display: flex;
   justify-content: space-between;
 }
