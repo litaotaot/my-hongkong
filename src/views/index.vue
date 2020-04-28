@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <el-container>
-      <el-aside width="200px">
+      <el-aside style="max-width: 200px">
           <LayoutLeft></LayoutLeft>
       </el-aside>
       <el-container>

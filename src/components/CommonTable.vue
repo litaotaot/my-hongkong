@@ -28,6 +28,7 @@
             :prop="item.prop"
             :label="item.label"
             :align="item.align"
+            :width="item.width"
             v-if="item.prop !== 'g'"
           ></el-table-column>
           <el-table-column
@@ -35,6 +36,7 @@
             :prop="item.prop"
             :label="item.label"
             :align="item.align"
+            :width="item.width"
             v-else
           >
             <template slot-scope="scope">
@@ -73,7 +75,6 @@ import EditRole from "./EditRole";
 import {  mapMutations } from 'vuex'
 import mixin from '../mixin/mixin'
 import axios from 'axios'
-import '../api/index'
 
 export default {
   mixins: [mixin],
@@ -103,7 +104,7 @@ export default {
     placeholder4: {
       type: String,
       default: '请输入内容'
-    }
+    },
   },
   data() {
     return {
@@ -122,11 +123,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.pageSizes)
-    console.log(this.checksArr)
-    console.log(this.Clone(this.checksArr4))
-    console.log(this.placeholder4)
-    console.log(this.placeholder)
   },
   computed: {
     total() {
@@ -147,18 +143,22 @@ export default {
       this.pageNum = val;
     },
     handleClick(e) {
-      console.log(e.path[0].innerText);
-      axios.get('https://www.baidu.com/').then(res => {
-        console.log(res)
-      })
+      // console.log(e.path[0].innerText);
+      // axios.get('https://www.baidu.com/').then(res => {
+      //   console.log(res)
+      // })
     },
     isCloseDialog(e) {
       console.log(e);
       this.dialogTableVisible = e;
     },
-    ...mapMutations({
-      getSelect: "filters/GET_FILTERS_STATE"
-    }),
+    getSelect(e) {
+      // console.log(e)
+      this.$emit('onChange',e)
+    },
+    // ...mapMutations({
+    //   getSelect: "filters/GET_FILTERS_STATE"
+    // }),
   },
   created() {},
   components: {

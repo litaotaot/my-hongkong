@@ -10,6 +10,7 @@
         :buttonsArr4="buttonsArr"
         :checksArr4="checksArr"
         :placeholder4="placeholder"
+        @onChange="getChange"
       ></CommonTable>
     </div>
   </div>
@@ -24,6 +25,7 @@ export default {
   name: "User",
   data() {
     return {
+      api: "https://www.bootcdn.cn/",
       HeaderData,
       pageSizes: [10, 20, 30, 40],
       pageSize: 10,
@@ -48,8 +50,14 @@ export default {
       filterState: state => state.filters.filterState //可以用过滤的方法试下
     })
   },
-  methods: {},
-  mounted() {},
+  methods: {
+    ...mapMutations({
+      getChange: "filters/GET_FILTERS_STATE"
+    }),
+  },
+  mounted() {
+    this.$store.dispatch("filters/GET_ALL_SYNC_STATE", { api: this.api })    //重新请求数据
+  },
   components: {
     CommonTable
   }
