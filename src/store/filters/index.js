@@ -6,6 +6,7 @@ import axios from 'axios'
 import '../../api/index'   //数据模拟
 import '../../api/teamMock'
 import '../../api/userMock'
+import '../../api/roleMock'
 
 const initState = function () {
   return {
@@ -51,6 +52,20 @@ const filters = {
           item.z = ['编辑', '删除']
         } else if (item.a === '已删除') {
           item.z = ['清除', '回收']
+        }
+      })
+      state.tableData = data
+    },
+    //role异步突变
+    GET_ALL_ROLE: (state, data) => {
+      console.log(data)
+      data.map(item => {
+        if (item.a === '启用') {
+          item.z = ["编辑", "禁用"]
+        } else if (item.a === '禁用') {
+          item.z = ["编辑", "删除"]
+        } else {
+          item.z = ["编辑", "回收"]
         }
       })
       state.tableData = data
@@ -109,6 +124,14 @@ const filters = {
         axios.get(data.api).then((res) => {
           const { dataArr } = res.data.data
           commit("GET_ALL_TEAM", dataArr)
+        })
+      })
+    },
+    GET_ALL_SYNC_ROLE({ commit }, data) {
+      new Promise((resolve, reject) => {
+        axios.get(data.api).then((res) => {
+          const { dataArr } = res.data.data
+          commit("GET_ALL_ROLE", dataArr)
         })
       })
     }
